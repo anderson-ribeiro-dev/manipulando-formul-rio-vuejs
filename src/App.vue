@@ -37,15 +37,18 @@
 					<select v-model="prioridade">
 						<!--:value="prioridade.codigo" ausente, seleciona valor -->
 						<option v-for="prioridade in prioridades"
-							:value="prioridade.codigo"  
-						 	:key="prioridade.codigo"
+							:value="prioridade.codigo"  :key="prioridade.codigo"
 							:selected="prioridade.codigo === 1"  > <!-- valor padrão -->
 								{{ prioridade.codigo }} - {{ prioridade.nome }}
 						</option>
 					</select>
 				</Rotulo>
 				<Rotulo nome="Primeira Reclamação?">
-					<Escolha />
+					<!-- como o v-model funciona por baixo dos panos -->
+					<input type="text" :value="temp" @input="temp = $event.target.value">
+				</Rotulo>
+				<Rotulo nome="Primeira Reclamação?">
+					<Escolha v-model="escolha" />
 				</Rotulo>
 				<hr>
 				<button>Enviar</button>
@@ -78,10 +81,13 @@
 					<span>{{ produto }}</span>
 				</Rotulo>
 				<Rotulo nome="Prioridade">
-					<span>{{ prioridade }} -- {{ tipoPrioridade }} </span>
+					<span>{{ prioridade }} - {{ tipoPrioridade }} </span>
 				</Rotulo>
 				<Rotulo nome="Primeira Reclamação?">
-					<span>???</span>
+					<span>{{ temp }}</span>
+				</Rotulo>
+				<Rotulo nome="Primeira Reclamação?">
+					<span>{{ escolha }}</span>
 				</Rotulo>
 			</div>
 		</div>
@@ -124,7 +130,9 @@ export default {
 				email: '',
 				senha: '',
 				idade: 25,
-			}
+			},
+			temp: 'teste',
+			escolha: true
 		}
 	},
 	created() {
